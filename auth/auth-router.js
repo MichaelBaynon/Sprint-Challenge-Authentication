@@ -14,7 +14,7 @@ router.post("/register", (req, res) => {
   const hash = bcrypt.hashSync(user.password, 10);
   user.password = hash;
 
-  Users.add(user)
+  Users.insert(user)
     .then(saved => {
       res.status(201).json(saved);
     })
@@ -50,7 +50,7 @@ router.post("/login", (req, res) => {
 router.get("/", restricted, (req, res) => {
   Users.find()
     .then(users => {
-      res.json({ loggedInUser: req.username, users });
+      res.status(200).json({ loggedInUser: req.username, users });
     })
     .catch(err => res.send(err));
 });
